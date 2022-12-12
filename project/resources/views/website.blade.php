@@ -178,6 +178,7 @@
 								</select>
 							</div>
 							<div class="cart-option">
+			                    <a href="{{route('Order.index')}}">Order</a>
 								<img src="{{asset('libraries/assets/images/header/cart.png')}}" alt="shop-cart">
 								<div class="count-item">04</div>
 								<div class="cart-content">
@@ -305,12 +306,13 @@
 								</div>
 							</div>
 							<div class="author-account">
+							@if(session('user')!='')
+								
 								<div class="author-icon">
-									<img src="{{asset('libraries/assets/images/chef/author/08.jpg')}}" alt="author">
+									<img src="{{ asset('storage'.session('photo'))}}" alt="author">
 								</div>
 
                                 
-								@if(session('user')!='')
 								
 								<div class="author-select">
 									{{session('user')}}
@@ -323,19 +325,14 @@
 
 								@if(session('user')=='')
 								    <div class="author-select">
+									<div class="author-icon">
+									<img src="{{asset('storage/images/unknown.jpg')}}" alt="author">
+								    </div>
+                                    
 									<li><a href="{{route('signin.create')}}">Signin</a></li>
                                     </div>
 								@endif
 								
-
-
-								
-
-
-
-
-
-
 
 
 							</div>
@@ -360,12 +357,10 @@
 						<div class="col-xl-8 col-12">
 							<div class="banner-content">
 								<h2>Unique Food Network...</h2>
-								<form action="/">
+								<form method="get" action="{{url('search')}}" id="form" class="validate">
+									@csrf 
 									<div class="codexcoder-selectoption">
-										<select name="text">
-											<option value="1">Find A Food</option>
-											<option value="2">Find A Chef</option>
-										</select>
+										
 									</div>
 									<input type="text" name="type" placeholder="Enter your food name">
 									<button type="submit"><i class="icofont-search-2"></i></button>
@@ -445,40 +440,8 @@
 										</div>
 									</div>
 								</div>
-								<div class="swiper-slide">
-									<div class="food-item">
-										<div class="food-thumb">
-											<a href="#"><img src="{{asset('libraries/assets/images/food/06.png')}}" alt="food"></a>
-										</div>
-										<div class="food-content">
-											<a href="#">Coffee</a>
-										</div>
-									</div>
-								</div>
-								<div class="swiper-slide">
-									<div class="food-item">
-										<div class="food-thumb">
-											<a href="#"><img src="{{asset('libraries/assets/images/food/07.png')}}" alt="food"></a>
-										</div>
-										<div class="food-content">
-											<a href="#">Tea</a>
-										</div>
-									</div>
-								</div>
-								<div class="swiper-slide">
-									<div class="food-item">
-										<div class="food-thumb">
-											<a href="#"><img src="{{asset('libraries/assets/images/food/08.png')}}" alt="food"></a>
-										</div>
-										<div class="food-content">
-											<a href="#">Beef Roast</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="food-slider-next"><i class="icofont-double-left"></i></div>
-						<div class="food-slider-prev"><i class="icofont-double-right"></i>
+							
+								
 						</div>
 					</div>
 				</div>
@@ -543,6 +506,10 @@
 		</section>
 		<!-- Food Services Section Ending here -->
 
+
+
+
+		
 		<!-- Popular Food Section Start Here -->
 		<section class="popular-foods padding-tb" style="background-color: #fafeff;">
 			<div class="container">
@@ -552,14 +519,61 @@
 				</div>
 				<div class="section-wrapper">
 					<div class="row">
+
+					@foreach($data as $item)
+					<div class="col-xl-4 col-md-6 col-12">
+							<div class="p-food-item">
+								<div class="p-food-inner">
+									<div class="p-food-thumb">
+										<img src="{{ asset('storage'.$item->photo)}}" alt="p-food">
+										<span>20.99</span>
+									</div>
+									<div class="p-food-content">
+										<div class="p-food-author">
+										@foreach($data3 as $item3)
+										
+										@if($item->user_id==$item3->id)
+											<a href="homechef-single.html"><img src="{{ asset('storage'.$item3->photo)}}" alt="food-author"></a>
+										@break
+										@endif
+										@endforeach   
+										</div>
+										<h6><a href="#">{{$item->name}}</a></h6>
+										<p>Available on <a href="#">Everyday</a></p>
+										<div class="p-food-group">
+											<a href="#" class="food-btn"><span>ADD TO CART</span></a>
+											
+										</div>
+										<div class="p-food-footer">
+											<div class="left"><i class="icofont-focus"></i>Servings 1.1</div>
+											<div class="right"><i class="icofont-home"></i>6th Avenue New York</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+                        @endforeach
+
+
+
+
+
+
+
+
+
+
+
+
+
 						<div class="col-xl-4 col-md-6 col-12">
 							<div class="p-food-item">
 								<div class="p-food-inner">
 									<div class="p-food-thumb">
-										<img src="{{asset('libraries/assets/images/popular-food/01.jpg')}}" alt="p-food">
+										<img src="{{asset('storage/images/rBbgV9UhCwXJMb5nQgIEExgCx7Jtk7riIi079dxJ.jpg')}}" alt="p-food">
 										
 
-										@if( Carbon\Carbon::now()<Carbon\Carbon::parse('2022-12-15 00:00:00') && Carbon\Carbon::now() > Carbon\Carbon::parse('2022-12-11 00:00:00' ))
+										@if( Carbon\Carbon::now()<Carbon\Carbon::parse('2022-12-10 00:00:00') && Carbon\Carbon::now() > Carbon\Carbon::parse('2022-12-7 00:00:00' ))
 										<span>$20 OFFER</span>
 									@endif
 									</div>
@@ -594,288 +608,20 @@
 												</div>
 											</li>
 										</ul>
-										@if( Carbon\Carbon::now()<Carbon\Carbon::parse('2022-12-15 00:00:00') && Carbon\Carbon::now() > Carbon\Carbon::parse('2022-12-11 00:00:00' ))
 										<div class="p-food-footer">
 											<div class="left">
 											<span>Offer ends in</span>
 											</div>
-											<div class="right">{{Carbon\Carbon::parse('2022-12-7 08:00:00')}}</div>
-										</div>
-										@endif
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-4 col-md-6 col-12">
-							<div class="p-food-item">
-								<div class="p-food-inner">
-									<div class="p-food-thumb">
-										<img src="{{asset('libraries/assets/images/popular-food/02.jpg')}}" alt="p-food">
-										<span>$20 - $30</span>
-									</div>
-									<div class="p-food-content">
-										<div class="p-food-author">
-											<a href="#"><img src="{{asset('libraries/assets/images/chef/author/02.jpg')}}" alt="food-author"></a>
-										</div>
-										<h6><a href="#">Meat Lovers</a></h6>
-										<div class="p-food-group">
-											<span>Type of food :</span>
-											<a href="#">Beef Roast</a>
-											<a href="#">Pizza</a>
-											<a href="#">Stakes</a>
-										</div>
-										<ul class="del-time">
-											<li>
-												<i class="icofont-cycling-alt"></i>
-												<div class="time-tooltip">
-													<div class="time-tooltip-holder">
-														<span class="tooltip-label">Delivery time</span>
-														<span class="tooltip-info">Your order will be delivered in 20 minutes.</span>
-													</div>
-												</div>
-											</li>
-											<li>
-												<i class="icofont-stopwatch"></i>
-												<div class="time-tooltip">
-													<div class="time-tooltip-holder">
-														<span class="tooltip-label">Pickup time</span>
-														<span class="tooltip-info">You can pickup order in 20 minutes.</span>
-													</div>
-												</div>
-											</li>
-										</ul>
-										<div class="p-food-footer">
-											<div class="left">
-												<div class="rating">
-													<i class="icofont-star"></i>
-													<i class="icofont-star"></i>
-													<i class="icofont-star"></i>
-													<i class="icofont-star"></i>
-													<i class="icofont-star"></i>
-												</div>
-											</div>
-											<div class="right"><i class="icofont-home"></i>6th Avenue New York</div>
+											<div class="right">{{Carbon\Carbon::parse('2022-12-10 08:00:00')}}</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-xl-4 col-md-6 col-12">
-							<div class="p-food-item">
-								<div class="p-food-inner">
-									<div class="p-food-thumb">
-										<img src="{{asset('libraries/assets/images/popular-food/03.jpg')}}" alt="p-food">
-										<span>$20 - $30</span>
-									</div>
-									<div class="p-food-content">
-										<div class="p-food-author">
-											<a href="#"><img src="{{asset('libraries/assets/images/chef/author/03.jpg')}}" alt="food-author"></a>
-										</div>
-										<h6><a href="#">Subway</a></h6>
-										<div class="p-food-group">
-											<span>Type of food :</span>
-											<a href="#">Beef Roast</a>
-											<a href="#">Pizza</a>
-											<a href="#">Stakes</a>
-										</div>
-										<ul class="del-time">
-											<li>
-												<i class="icofont-cycling-alt"></i>
-												<div class="time-tooltip">
-													<div class="time-tooltip-holder">
-														<span class="tooltip-label">Delivery time</span>
-														<span class="tooltip-info">Your order will be delivered in 20 minutes.</span>
-													</div>
-												</div>
-											</li>
-											<li>
-												<i class="icofont-stopwatch"></i>
-												<div class="time-tooltip">
-													<div class="time-tooltip-holder">
-														<span class="tooltip-label">Pickup time</span>
-														<span class="tooltip-info">You can pickup order in 20 minutes.</span>
-													</div>
-												</div>
-											</li>
-										</ul>
-										<div class="p-food-footer">
-											<div class="left">
-												<div class="rating">
-													<i class="icofont-star"></i>
-													<i class="icofont-star"></i>
-													<i class="icofont-star"></i>
-													<i class="icofont-star"></i>
-													<i class="icofont-star"></i>
-												</div>
-											</div>
-											<div class="right"><i class="icofont-home"></i>6th Avenue New York</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-4 col-md-6 col-12">
-							<div class="p-food-item">
-								<div class="p-food-inner">
-									<div class="p-food-thumb">
-										<img src="{{asset('libraries/assets/images/popular-food/04.jpg')}}" alt="p-food">
-										<span>$20 - $30</span>
-									</div>
-									<div class="p-food-content">
-										<div class="p-food-author">
-											<a href="#"><img src="{{asset('libraries/assets/images/chef/author/04.jpg')}}" alt="food-author"></a>
-										</div>
-										<h6><a href="#">Hardee’s</a></h6>
-										<div class="p-food-group">
-											<span>Type of food :</span>
-											<a href="#">Beef Roast</a>
-											<a href="#">Pizza</a>
-											<a href="#">Stakes</a>
-										</div>
-										<ul class="del-time">
-											<li>
-												<i class="icofont-cycling-alt"></i>
-												<div class="time-tooltip">
-													<div class="time-tooltip-holder">
-														<span class="tooltip-label">Delivery time</span>
-														<span class="tooltip-info">Your order will be delivered in 20 minutes.</span>
-													</div>
-												</div>
-											</li>
-											<li>
-												<i class="icofont-stopwatch"></i>
-												<div class="time-tooltip">
-													<div class="time-tooltip-holder">
-														<span class="tooltip-label">Pickup time</span>
-														<span class="tooltip-info">You can pickup order in 20 minutes.</span>
-													</div>
-												</div>
-											</li>
-										</ul>
-										<div class="p-food-footer">
-											<div class="left">
-												<div class="rating">
-													<i class="icofont-star"></i>
-													<i class="icofont-star"></i>
-													<i class="icofont-star"></i>
-													<i class="icofont-star"></i>
-													<i class="icofont-star"></i>
-												</div>
-											</div>
-											<div class="right"><i class="icofont-home"></i>6th Avenue New York</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-4 col-md-6 col-12">
-							<div class="p-food-item">
-								<div class="p-food-inner">
-									<div class="p-food-thumb">
-										<img src="{{asset('libraries/assets/images/popular-food/05.jpg')}}" alt="p-food">
-										<span>$20 - $30</span>
-									</div>
-									<div class="p-food-content">
-										<div class="p-food-author">
-											<a href="#"><img src="{{asset('libraries/assets/images/chef/author/05.jpg')}}" alt="food-author"></a>
-										</div>
-										<h6><a href="#">Nando’s</a></h6>
-										<div class="p-food-group">
-											<span>Type of food :</span>
-											<a href="#">Beef Roast</a>
-											<a href="#">Pizza</a>
-											<a href="#">Stakes</a>
-										</div>
-										<ul class="del-time">
-											<li>
-												<i class="icofont-cycling-alt"></i>
-												<div class="time-tooltip">
-													<div class="time-tooltip-holder">
-														<span class="tooltip-label">Delivery time</span>
-														<span class="tooltip-info">Your order will be delivered in 20 minutes.</span>
-													</div>
-												</div>
-											</li>
-											<li>
-												<i class="icofont-stopwatch"></i>
-												<div class="time-tooltip">
-													<div class="time-tooltip-holder">
-														<span class="tooltip-label">Pickup time</span>
-														<span class="tooltip-info">You can pickup order in 20 minutes.</span>
-													</div>
-												</div>
-											</li>
-										</ul>
-										<div class="p-food-footer">
-											<div class="left">
-												<div class="rating">
-													<i class="icofont-star"></i>
-													<i class="icofont-star"></i>
-													<i class="icofont-star"></i>
-													<i class="icofont-star"></i>
-													<i class="icofont-star"></i>
-												</div>
-											</div>
-											<div class="right"><i class="icofont-home"></i>6th Avenue New York</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-4 col-md-6 col-12">
-							<div class="p-food-item">
-								<div class="p-food-inner">
-									<div class="p-food-thumb">
-										<img src="{{asset('libraries/assets/images/popular-food/06.jpg')}}" alt="p-food">
-										<span>$20 - $30</span>
-									</div>
-									<div class="p-food-content">
-										<div class="p-food-author">
-											<a href="#"><img src="{{asset('libraries/assets/images/chef/author/06.jpg')}}" alt="food-author"></a>
-										</div>
-										<h6><a href="#">Pizza Hut</a></h6>
-										<div class="p-food-group">
-											<span>Type of food :</span>
-											<a href="#">Beef Roast</a>
-											<a href="#">Pizza</a>
-											<a href="#">Stakes</a>
-										</div>
-										<ul class="del-time">
-											<li>
-												<i class="icofont-cycling-alt"></i>
-												<div class="time-tooltip">
-													<div class="time-tooltip-holder">
-														<span class="tooltip-label">Delivery time</span>
-														<span class="tooltip-info">Your order will be delivered in 20 minutes.</span>
-													</div>
-												</div>
-											</li>
-											<li>
-												<i class="icofont-stopwatch"></i>
-												<div class="time-tooltip">
-													<div class="time-tooltip-holder">
-														<span class="tooltip-label">Pickup time</span>
-														<span class="tooltip-info">You can pickup order in 20 minutes.</span>
-													</div>
-												</div>
-											</li>
-										</ul>
-										<div class="p-food-footer">
-											<div class="left">
-												<div class="rating">
-													<i class="icofont-star"></i>
-													<i class="icofont-star"></i>
-													<i class="icofont-star"></i>
-													<i class="icofont-star"></i>
-													<i class="icofont-star"></i>
-												</div>
-											</div>
-											<div class="right"><i class="icofont-home"></i>6th Avenue New York</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+						
+						
+						
+					
 					</div>
 				</div>
 			</div>
@@ -992,7 +738,7 @@
 							<div class="p-food-item style-2">
 								<div class="p-food-inner">
 									<div class="p-food-thumb">
-										<img src="{{asset('libraries/assets/images/popular-food//style-2/02.jpg')}}" alt="p-food">
+										<img src="{{asset('storageimages//rBbgV9UhCwXJMb5nQgIEExgCx7Jtk7riIi079dxJ.jpg')}}" alt="p-food">
 										<span>$20.99</span>
 									</div>
 									<div class="p-food-content">
@@ -1264,48 +1010,27 @@
 				</div>
 				<div class="section-wrapper">
 					<div class="top-restaurant">
+
+					    @foreach ($data2 as $item2)
 						<div class="restaurant-item">
 							<div class="restaurant-inner">
 								<div class="restaurant-thumb">
-									<a href="#"><img src="{{asset('libraries/assets/images/restaurant/01.jpg')}}" alt="restaurant"></a>
+									<a href="#"><img src="{{ asset('storage'.$item2->photo)}}" alt="restaurant"></a>
 								</div>
 							</div>
 						</div>
-						<div class="restaurant-item">
-							<div class="restaurant-inner">
-								<div class="restaurant-thumb">
-									<a href="#"><img src="{{asset('libraries/assets/images/restaurant/02.jpg')}}" alt="restaurant"></a>
-								</div>
-							</div>
-						</div>
-						<div class="restaurant-item">
-							<div class="restaurant-inner">
-								<div class="restaurant-thumb">
-									<a href="#"><img src="{{asset('libraries/assets/images/restaurant/03.jpg')}}" alt="restaurant"></a>
-								</div>
-							</div>
-						</div>
-						<div class="restaurant-item">
-							<div class="restaurant-inner">
-								<div class="restaurant-thumb">
-									<a href="#"><img src="{{asset('libraries/assets/images/restaurant/04.jpg')}}" alt="restaurant"></a>
-								</div>
-							</div>
-						</div>
-						<div class="restaurant-item">
-							<div class="restaurant-inner">
-								<div class="restaurant-thumb">
-									<a href="#"><img src="{{asset('libraries/assets/images/restaurant/05.jpg')}}" alt="restaurant"></a>
-								</div>
-							</div>
-						</div>
-						<div class="restaurant-item">
-							<div class="restaurant-inner">
-								<div class="restaurant-thumb">
-									<a href="#"><img src="{{asset('libraries/assets/images/restaurant/06.jpg')}}" alt="restaurant"></a>
-								</div>
-							</div>
-						</div>
+					
+                        @endforeach
+
+
+
+
+
+
+
+
+
+						
 						<div class="restaurant-item">
 							<div class="restaurant-inner">
 								<div class="restaurant-thumb">
@@ -1603,102 +1328,7 @@
 		<!-- Testimonial Section Ending Here -->
 
 
-		<!-- Blog Section Start here -->
-		<section class="blog-section padding-tb">
-			<div class="container">
-				<div class="section-header">
-					<h3>Most Popular Blog</h3>
-					<p>Completely network impactful users whereas next-generation applications engage out thinking via tactical action.</p>
-				</div>
-				<div class="section-wrapper">
-					<div class="row">
-						<div class="col-xl-6 col-12 blog-left">
-							<div class="post-item">
-								<div class="post-inner">
-									<div class="post-thumb">
-										<a href="#">
-											<img src="{{asset('libraries/assets/images/blog/01.jpg')}}" alt="petuk-blog">
-										</a>
-									</div>
-									<div class="post-content">
-										<h5><a href="#">Center What For Semicon Remoing.</a></h5>
-										<a href="#" class="date">22 December 2019</a>
-										<p>Drama enable wordwid action team where Motin Was Proce Aramin Raher Conven Cuvas rama enabe wordwd acton team herea mnes Uroced Aran Manu Produ Raher Convene Cuva</p>
-										<a href="#" class="food-btn"><span>Read More</span></a>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-xl-6 col-12 blog-right">
-							<div class="col-md-6 col-12">
-								<div class="post-item">
-									<div class="post-inner">
-										<div class="post-thumb">
-											<a href="#">
-												<img src="{{asset('libraries/assets/images/blog/02.jpg')}}" alt="petuk-blog">
-											</a>
-										</div>
-										<div class="post-content">
-											<h6><a href="#">Forin Semcon Remon..</a></h6>
-											<a href="#" class="date">22 December 2019</a>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6 col-12">
-								<div class="post-item">
-									<div class="post-inner">
-										<div class="post-thumb">
-											<a href="#">
-												<img src="{{asset('libraries/assets/images/blog/03.jpg')}}" alt="petuk-blog">
-											</a>
-										</div>
-										<div class="post-content">
-											<h6><a href="#">Forin Semcon Remon..</a></h6>
-											<a href="#" class="date">22 December 2019</a>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6 col-12">
-								<div class="post-item">
-									<div class="post-inner">
-										<div class="post-thumb">
-											<a href="#">
-												<img src="{{asset('libraries/assets/images/blog/04.jpg')}}" alt="petuk-blog">
-											</a>
-										</div>
-										<div class="post-content">
-											<h6><a href="#">Forin Semcon Remon..</a></h6>
-											<a href="#" class="date">22 December 2019</a>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6 col-12">
-								<div class="post-item">
-									<div class="post-inner">
-										<div class="post-thumb">
-											<a href="#">
-												<img src="{{asset('libraries/assets/images/blog/05.jpg')}}" alt="petuk-blog">
-											</a>
-										</div>
-										<div class="post-content">
-											<h6><a href="#">Forin Semcon Remon..</a></h6>
-											<a href="#" class="date">22 December 2019</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="all-blog-btn text-center">
-						<a href="#" class="food-btn"><span>more blog posts</span></a>
-					</div>
-				</div>
-			</div>
-		</section>
-		<!-- Blog Section Ending here -->
+		
 
 		<!-- Footer Section Start Here -->
 		<footer class="footer">

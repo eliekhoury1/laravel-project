@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string("email");
             $table->string("number");
             $table->string("Admin_reply")->nullable();
-            $table->unsignedBigInteger("login_id");
+            $table->unsignedBigInteger("user_id");
             $table->timestamps();
-            $table->foreign('login_id')->references('id')->on("logins");
+            $table->foreign('user_id')->references('id')->on("users");
         });
     }
 

@@ -5,11 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class store extends Model
+class cartfood extends Model
 {
     use HasFactory;
-
-    public function getLogin(){
-        return $this->belongsTo(login::class,"user_id","id");
-    }
 }

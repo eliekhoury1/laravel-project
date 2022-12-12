@@ -222,15 +222,16 @@ input[type=checkbox]{
 				
 		
 		
-                <form  name="signupForm" action="{{route('signin.store')}}" method="POST">
+                <form  name="signupForm" action="{{route('signin.store')}}" method="POST" enctype="multipart/form-data">
                    @csrf
                     <input type="text" name="name" placeholder="Full Name*">
                     <input type="email" name="email" placeholder="Your Email*">
                     <input type="text" name="number" placeholder="Phone Number">
 					<select name="role" id="role">
 					<option value="Role1">User</option>
-					
                     </select><br>
+                    <!--<label for="picture">Product image</label>-->
+                     <!--<input type="file" name="photo" required><br>-->
                     <input type="password" name="password" placeholder="Password">
                     <input type="password" name="password" placeholder="Confirm password">
                     <input type="submit" value="Free Registration">

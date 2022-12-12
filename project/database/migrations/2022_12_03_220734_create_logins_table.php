@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('logins', function (Blueprint $table) {
             $table->id();
+            $table->string('photo',300)->default('/images/yOKF7zQloW81YEFnKN1jxIY5X5JgiEQgqCt8NWiN.jpg');
             $table->string("name");
             $table->string("email");
             $table->string("role");

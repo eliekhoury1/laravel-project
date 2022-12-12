@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\addfood;
+use App\Models\Foods;
 use Illuminate\Http\Request;
 use DB;
 
-class AddfoodController extends Controller
+class FoodsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,12 +15,9 @@ class AddfoodController extends Controller
      */
     public function index()
     {
-        //badde zabbta 3al loggedin in cook ma3 l info taba3o
-        //$data=addfood::all();
-        $data1=addfood::where("user",session('id'))->get();
+        $data1=Foods::where("user_id",session('id'))->get();
         return view("displaymenu")->with('listdata',$data1);
-        
-        
+ 
     }
 
     /**
@@ -45,7 +42,7 @@ class AddfoodController extends Controller
         
 
        
-        $product = new addfood();
+        $product = new Foods();
         $product->name=$request->name;
         $product->price= $request->price;
         $product->cuisine= $request->cuisine;
@@ -55,7 +52,7 @@ class AddfoodController extends Controller
         $tmp= $request->file('photo')->store('public/images'); 
         $product->photo= str_replace('public', '', $tmp);
         $product->save();
-        return redirect(route('addfood.index'));
+        return redirect(route('Foods.index'));
         
 
     }
@@ -63,10 +60,10 @@ class AddfoodController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\addfood  $addfood
+     * @param  \App\Models\Foods  $addfood
      * @return \Illuminate\Http\Response
      */
-    public function show(addfood $addfood)
+    public function show(Foods $addfood)
     {
         //
     }
@@ -74,13 +71,13 @@ class AddfoodController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\addfood  $addfood
+     * @param  \App\Models\Foods  $addfood
      * @return \Illuminate\Http\Response
      */
-    public function edit(addfood $addfood)
+    public function edit($addfood)
     {
         //
-        $data=addfood::find($addfood->id);
+        $data=Foods::find($addfood);
         return view("Editfood")->with("addfood",$data);
         //$data=addfood::find($addfood->id);
     }
@@ -89,13 +86,13 @@ class AddfoodController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\addfood  $addfood
+     * @param  \App\Models\Foods  $addfood
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, addfood $addfood)
+    public function update(Request $request,$addfood)
     {
         //
-        $data=addfood::find($addfood->id);
+        $data=Foods::find($addfood);
         $data->name=$request->name;
         $data->price= $request->price;
         $data->cuisine= $request->cuisine;
@@ -103,7 +100,7 @@ class AddfoodController extends Controller
         $tmp= $request->file('photo')->store('public/images'); 
         $data->photo= str_replace('public', '', $tmp);
         $data->save();
-        return redirect(route('addfood.index'));
+        return redirect(route('Foods.index'));
 
 
      
@@ -113,14 +110,46 @@ class AddfoodController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\addfood  $addfood
+     * @param  \App\Models\Foods  $addfood
      * @return \Illuminate\Http\Response
      */
-    public function destroy(addfood $addfood)
+    public function destroy($addfood)
     {
         //
-        $data=addfood::find($addfood->id);
+        $data=Foods::find($addfood);
         $data->delete();
-        return redirect (route('addfood.index'));
+        return redirect (route('Foods.index'));
     }
+
+    public function search(Request $request)
+    {
+        $tmp=$request->input('type');
+        // $data=foods::where("name", $tmp)->orwhere("price", $tmp)->orwhere("cuisine", $tmp)->orwhere("diet", $tmp)->get();
+        // $data1=foods::where("resto_id",$result)->get();
+        // $mergedArray = array_merge($data->toArray(), $data1->toArray());
+        $result = (new LoginController)->search($tmp);
+        $query = foods::select(DB::Raw('users.name as store'),DB::Raw('foods.*'))
+    ->join('users', 'foods.user_id', '=', 'users.id')
+    ->where('foods.user_id',  $result)
+    ->where('users.id', $result)
+    ->get();
+    $query1 = foods::select(DB::Raw('users.name as store'),DB::Raw('foods.*'))
+    ->join('users', 'foods.user_id', '=', 'users.id')->
+    where("foods.name", $tmp)->orwhere("foods.price", $tmp)->orwhere("foods.cuisine", $tmp)->orwhere("foods.diet", $tmp)->get();
+        
+    $mergedArray = array_merge($query->toArray(), $query1->toArray());
+    return  view('list')->with('list',$mergedArray);
+    }
+    public  static function getfood( $foods)
+    {
+        $data=foods::find($foods);
+        return $data;
+    }
+    public  static function getfoodname( $foods)
+    {
+        $data=foods::find($foods)->getLogin;
+        return $data->name;
+    }
+
+
 }

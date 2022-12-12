@@ -55,7 +55,7 @@ border-radius: 20px;
 </head>
 <body  background="libraries/assets/css/bg-image/bg.jpg">
 <div class="container">
-<form method="post" action="{{route('addfood.store')}}" id="form" class="validate" enctype="multipart/form-data">
+<form method="post" action="{{route('Foods.store')}}" id="form" class="validate" enctype="multipart/form-data">
 @csrf 
 <div class="form-field">
 <input type="hidden"  name="id" value=1>

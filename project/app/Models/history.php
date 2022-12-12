@@ -5,11 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class store extends Model
+class history extends Model
 {
     use HasFactory;
-
-    public function getLogin(){
-        return $this->belongsTo(login::class,"user_id","id");
+    public function getorder(){
+        return $this->belongsTo(order::class,'orders_id','id');
     }
 }

@@ -55,7 +55,7 @@ border-radius: 20px;
 </head>
 <body  background="libraries/assets/css/bg-image/bg.jpg">
 <div class="container">
-<form method="post" action="{{route('addfood.update',['addfood'=>$addfood])}}" id="form" class="validate"  >
+<form method="post" action="{{route('Foods.update',['Food'=>$addfood])}}" id="form" class="validate" enctype="multipart/form-data" >
 @csrf 
 @method("PUT")
 <div class="form-field">
@@ -73,26 +73,25 @@ border-radius: 20px;
   <div class="form-field">
     <label for="cuisine">cuisine</label>
     <select class="selection" id="cuisine" name="cuisine" >
-    <option value="Italian" >Italian</option>
-    <option value="Japanese">Japanese</option>
-    <option value="Mexican" >Mexican</option>
-    <option value="Chinese" >Chinese</option>
-    <option value="Turkish" >Turkish</option>
-    <option value="Thai"    >Thai</option>
-    <option value="French"  ></option>
+    <option value="Italian" {{($addfood->cuisine=="Italian")? "selected":""}} >Italian</option>
+    <option value="Japanese" {{($addfood->cuisine=="Japanese")? "selected":""}}>Japanese</option>
+    <option value="Mexican" {{($addfood->cuisine=="Mexican")? "selected":""}}>Mexican</option>
+    <option value="Chinese" {{($addfood->cuisine=="Chinese")? "selected":""}}>Chinese</option>
+    <option value="Turkish" {{($addfood->cuisine=="Turkish")? "selected":""}}>Turkish</option>
+    <option value="Thai"    {{($addfood->cuisine=="Thai")? "selected":""}}>Thai</option>
+    <option value="French"  {{($addfood->cuisine=="French")? "selected":""}}></option>
   </select>
   </div>
   <div class="form-field">
   <label for="diet">diet</label>
   <select class="selection" id="diet" name="diet" value="{{$addfood->cuisine}}">
-    <option value="vegan">vegan</option>
-    <option value="keto">keto</option>
+    <option value="vegan" {{($addfood->diet=="vegan")? "selected":""}}>vegan</option>
+    <option value="keto" {{($addfood->diet=="keto")? "selected":""}}>keto</option>
   </select>
-</div>
-
+</div> 
 <div class="form-field">
 <label for="picture">Product image</label>
-<input type="file" name="photo"  value="{{ asset('storage'.$addfood->photo)}}" >
+<input type="file" name="photo" required value="{{asset('storage'.$addfood->photo)}}" >
 </div>
 
 

@@ -47,7 +47,7 @@ class StoreController extends Controller
         $data->email=$request->email;
         $data->number=$request->number;
         $data->Admin_reply=0;
-        $data->login_id=session('id');
+        $data->user_id=session('id');
         $data->save();
         return redirect (route('signin.index'));
     }
@@ -86,36 +86,25 @@ class StoreController extends Controller
     {
         
         $data1=new store();
-        //$data=store::select("login_id","Admin_reply","name","email","number","login_id")->find($store->id);
+        //$data=store::select("user_id","Admin_reply","name","email","number","user_id")->find($store->id);
         $data=store::find($store->id);
         $data->delete();
 
         $data1->name=$store->name;
         $data1->email=$store->email;
         $data1->number=$store->number;
-        $data1->login_id=$store->login_id;
+        $data1->user_id=$store->user_id;
         $data1->Admin_reply=1;
         $data1->save();
 
-        //@if($store->Admin_reply==1)
-        //$q=stores::select(DB::Raw('login_id as lgid'),DB::Raw(''))
-        //@endif
-       // $q = DB::table('stores')
-         //   ->join('logins', 'stores.login_id', '=', 'logins.id')
-         //   ->select('logins.*')
-         //   ->get();
-
+     
             
-        DB::table('logins')->where('id', $store->login_id)->update([
+        DB::table('users')->where('id', $store->user_id)->update([
         'role' =>'Role2'
         ]);
         $data->delete();
         return redirect (route('store.index'));
 
-        //
-        //$obj=new LoginController();
-       // return $obj->update();
-        //return $data;
      
     }
 

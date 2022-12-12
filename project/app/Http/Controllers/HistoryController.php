@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\index;
+use App\Models\history;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\AddfoodController;
 
-
-class IndexController extends Controller
+class HistoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,12 +16,6 @@ class IndexController extends Controller
     {
         //
     }
-
-
-    public function website(){
-        return view ('website');
-    }
-
 
     /**
      * Show the form for creating a new resource.
@@ -50,10 +41,10 @@ class IndexController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\index  $index
+     * @param  \App\Models\history  $history
      * @return \Illuminate\Http\Response
      */
-    public function show(index $index)
+    public function show(history $history)
     {
         //
     }
@@ -61,10 +52,10 @@ class IndexController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\index  $index
+     * @param  \App\Models\history  $history
      * @return \Illuminate\Http\Response
      */
-    public function edit(index $index)
+    public function edit(history $history)
     {
         //
     }
@@ -73,10 +64,10 @@ class IndexController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\index  $index
+     * @param  \App\Models\history  $history
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, index $index)
+    public function update(Request $request, history $history)
     {
         //
     }
@@ -84,10 +75,10 @@ class IndexController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\index  $index
+     * @param  \App\Models\history  $history
      * @return \Illuminate\Http\Response
      */
-    public function destroy(index $index)
+    public function destroy(history $history)
     {
         //
     }
