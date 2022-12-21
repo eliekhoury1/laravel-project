@@ -1,6 +1,12 @@
 	<!DOCTYPE html>
-	<html lang="zxx" class="no-js">
+<html lang="en">
 	<head>
+
+
+
+
+
+	
     <meta name="csrf-token" content="{{csrf_token()}}">
 		<!-- Mobile Specific Meta -->
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -31,6 +37,11 @@
 			<link rel="stylesheet" href="{{asset('libraries/assets/css/owl.carousel.css')}}">				
 			<link rel="stylesheet" href="{{asset('libraries/assets/css/main.css')}}">
 
+			<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="{{asset('libraries/assets/https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css')}}">
+
+<!-- Compiled and minified JavaScript -->
+<script src="{{asset('libraries/assets/https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js')}}"></script>
 
 
 
@@ -39,7 +50,7 @@
 body{
     margin: 0;
     padding: 0;
-    background-image: url(libraries/assets/css/bg-image/apps-bg.jpg);
+    background-image: url(/libraries/assets/css/bg-image/apps-bg.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     font-family : Verdana,Tahoma, sans-serif;
@@ -58,7 +69,7 @@ body{
 }
 
 .box img{
-	width:100px;
+	width:50px;
     margin-top:-50px ;
 }
 
@@ -120,7 +131,7 @@ form {
 
 .login a{
     text-decoration: none;
-    color: #ffffff;
+    color: black;
     font-size: 15px;
     text-align: center;
     cursor: pointer;
@@ -189,6 +200,8 @@ input[type=checkbox]{
 
 
         <h3  style= "color:red;">REGISTER NOW</h3>
+		
+			
         <div class="page">
             <div class="header">
                 <a id="login" class="active" href="#login">Signin</a>
@@ -196,28 +209,34 @@ input[type=checkbox]{
             </div>
             <div id="errorMsg"></div>
             <div class="content">
-			
-			
-			
+			        
+                    
+					
                 <form class="login" name="loginForm" action="{{route('login')}}" method="GET">
                   @csrf
 				    <input type="text" name="email" id="logName" placeholder="Email">
+					@error('email')
+					<p>{{$message}}</p>
+					@enderror
                     <input type="password" name="password" id="logPassword" placeholder="Password"><br>
-                    <input type="submit" value="Login">
-					<script src="https://accounts.google.com/gsi/client" async defer></script>
-					<div id="g_id_onload"
-						data-client_id="YOUR_GOOGLE_CLIENT_ID"
-						data-login_uri="https://your.domain/your_login_endpoint"
-						data-auto_prompt="false">
-					</div>
-					<div class="g_id_signin"
-						data-type="standard"
-						data-size="large"
-						data-theme="outline"
-						data-text="sign_in_with"
-						data-shape="rectangular"
-						data-logo_alignment="left">
-					</div>
+					@error('confirmpassword')
+					<p>{{$message}}</p>
+					@enderror
+			
+					<input type="submit" value="Login">
+				    <div class="class=login center-align">
+    <a class="oauth-container btn darken-4 white black-text" href="{{ route('auth.google') }}" style="text-transform:none">
+        <div class="left">
+            <img width="20px"  style="margin-top:20px; margin-right:8px" alt="Google sign-in" 
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+				</div>
+				<div class="right">
+				Login with Google
+                 </div>
+    </a>
+</div>
+			
+
                 </form>
 				
 		
@@ -226,6 +245,7 @@ input[type=checkbox]{
                    @csrf
                     <input type="text" name="name" placeholder="Full Name*">
                     <input type="email" name="email" placeholder="Your Email*">
+					
                     <input type="text" name="number" placeholder="Phone Number">
 					<select name="role" id="role">
 					<option value="Role1">User</option>
@@ -233,12 +253,41 @@ input[type=checkbox]{
                     <!--<label for="picture">Product image</label>-->
                      <!--<input type="file" name="photo" required><br>-->
                     <input type="password" name="password" placeholder="Password">
-                    <input type="password" name="password" placeholder="Confirm password">
+					
+                    <input type="password" name="confirmpassword" placeholder="Confirm password">
                     <input type="submit" value="Free Registration">
                 </form>
             </div>
         </div>
     </div>
+
+
+
+
+		<!-- scrollToTop start here -->
+		<a href="#" class="scrollToTop"><i class="icofont-swoosh-up"></i></a>
+		<!-- scrollToTop ending here -->
+
+
+		
+		<script src="{{asset('libraries/assets/js/jquery.js')}}"></script>
+		<script src="{{asset('libraries/assets/js/waypoints.min.js')}}"></script>
+		<script src="{{asset('libraries/assets/js/bootstrap.min.js')}}"></script>
+		<script src="{{asset('libraries/assets/js/isotope.pkgd.min.js')}}"></script>
+		<script src="{{asset('libraries/assets/js/wow.min.js')}}"></script>
+		<script src="{{asset('libraries/assets/js/swiper.min.js')}}"></script>
+		<script src="{{asset('libraries/assets/js/lightcase.js')}}"></script>
+		<script src="{{asset('libraries/assets/js/jquery.counterup.min.js')}}"></script>
+		<script src="{{asset('libraries/assets/js/functions.js')}}"></script>
+
+
+
+
+
+
+
+
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="index.js"></script>

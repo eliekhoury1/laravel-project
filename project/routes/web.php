@@ -8,6 +8,11 @@ use App\Http\Controllers\AddfoodController;
 use App\Http\Controllers\FoodsController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OfferController;
+use App\Http\Controllers\BotManController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\bot;
+use App\Http\Controllers\StripeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +44,60 @@ Route::get('search',[FoodsController::class,'search']);
 Route::resource('Cart',CartController::class);
 Route::post('/Cart/{id}', [CartController::class,'Addtocart']);
 Route::get('/toCart/{id}', [CartController::class,'tocartpage']);
-Route::post('/Cart/{id}', [CartController::class,'Addtocart']);
-Route::post('/CreateOrder/{total}/{id}', [OrderController::class,'createorder']);
+
+//Route::post('/CreateOrder/{total}/{id}', [OrderController::class,'createorder']);
+Route::post('/CreateOrder/{id}', [OrderController::class,'createorder']);
 Route::put('updateOrder', [OrderController::class,'updateord']);
 Route::resource('Order',OrderController::class);
+Route::get('/userstable', [LoginController::class,'getuser']);
+
+Route::get('/menu','App\HTTP\Controllers\FoodsController@getallfoods')->name('menu');
+Route::get('/editmenuinfo','App\HTTP\Controllers\FoodsController@editmenuinfo');
+Route::put('/updatemenuinfo/{id}', [FoodsController::class,'updatemenuinfo']);
+
+
+Route::get('getchefmenu/{id}',[FoodsController::class,'getchefmenu']);
+
+Route::put('/acceptorder/{id}', [OrderController::class,'acceptorder']);
+Route::put('/rejectorder/{id}', [OrderController::class,'rejectorder']);
+
+Route::get('/checkpendingorders', [OrderController::class,'checkorders']);
+
+Route::resource('offers',OfferController::class);
+
+
+Route::get('/userstable', [LoginController::class,'getuser']);
+Route::get('/storestable', [LoginController::class,'getstore']);
+Route::put('/backtouser/{id}', [LoginController::class,'backtouser']);
+Route::get('/foodstable', [FoodsController::class,'getallfood']);
+Route::get('/admin', [StoreController::class,'index1']);
+
+
+
+//Route::match(['get', 'post'], '/botman','BotManController@handle');
+Route::match(['get', 'post'], '/botman','App\Http\Controllers\Bot@handle');
+
+
+//Route::get('posts', [BotManController::class, 'handle']);
+//Route::get('posts', [Bot::class, 'handle']);
+Route::resource('review',ReviewController::class);
+
+Route::get('/stripe-payment', [StripeController::class, 'handleGet']);
+Route::post('/stripe-payment/{tot}', [StripeController::class, 'handlePost'])->name('stripe.payment');
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
+
+
+  
+Route::controller(LoginController::class)->group(function(){
+    Route::get('auth/google', 'redirectToGoogle')->name('auth.google');
+    Route::get('auth/google/callback', 'handleGoogleCallback');
+});

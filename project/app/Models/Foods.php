@@ -11,6 +11,10 @@ class Foods extends Model
 
 
     public function getLogin(){
-        return $this->belongsTo(User::class,'User_id','id');
+        return $this->belongsTo(User::class,'user_id','id');
+    }
+
+    public function getoffer(){
+        return $this->hasOne(offer::class);
     }
 }

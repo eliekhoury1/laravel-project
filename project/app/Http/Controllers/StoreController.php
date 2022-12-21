@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\store;
+use App\Models\menufacts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -102,6 +103,10 @@ class StoreController extends Controller
         DB::table('users')->where('id', $store->user_id)->update([
         'role' =>'Role2'
         ]);
+        $data2=new menufacts();
+        $data2->user_id=$store->user_id;
+        $data2->save();
+
         $data->delete();
         return redirect (route('store.index'));
 
@@ -120,5 +125,19 @@ class StoreController extends Controller
         $data=store::find($store->id);
         $data->delete();
         return redirect (route('store.index'));
+    }
+
+
+    public function index1()
+    { 
+        return view('adminpage');
+        
+
+    }
+     public  static function perm ()
+    {
+        $data=store::where("Admin_reply","0")->get();
+        $count=$data->count();
+        return $count;
     }
 }

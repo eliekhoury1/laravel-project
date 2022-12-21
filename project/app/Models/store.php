@@ -10,6 +10,6 @@ class store extends Model
     use HasFactory;
 
     public function getLogin(){
-        return $this->belongsTo(login::class,"user_id","id");
+        return $this->belongsTo(user::class,"user_id","id");
     }
 }

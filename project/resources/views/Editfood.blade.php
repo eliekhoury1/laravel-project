@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="csrf-token" content="{{csrf_token()}}">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+@extends('layouts.index')
+@include('layouts.nav1')
     <style>* {
   box-sizing: border-box;
   margin: 0;
@@ -13,7 +7,8 @@
 }
 
 body {
-  background-color: #eee;
+  background-image: url(/libraries/assets/css/bg-image/apps-bg.jpg);
+  
   font-family: 'helvetica neue', helvetica, arial, sans-serif;
   
 }
@@ -79,7 +74,7 @@ border-radius: 20px;
     <option value="Chinese" {{($addfood->cuisine=="Chinese")? "selected":""}}>Chinese</option>
     <option value="Turkish" {{($addfood->cuisine=="Turkish")? "selected":""}}>Turkish</option>
     <option value="Thai"    {{($addfood->cuisine=="Thai")? "selected":""}}>Thai</option>
-    <option value="French"  {{($addfood->cuisine=="French")? "selected":""}}></option>
+    <option value="French"  {{($addfood->cuisine=="French")? "selected":""}}French></option>
   </select>
   </div>
   <div class="form-field">
@@ -91,16 +86,36 @@ border-radius: 20px;
 </div> 
 <div class="form-field">
 <label for="picture">Product image</label>
-<input type="file" name="photo" required value="{{asset('storage'.$addfood->photo)}}" >
+<input type="file" name="photo"  value="{{asset('storage'.$addfood->photo)}}" >
 </div>
 
 
   <div class="form-field">
     <label for=""></label>
-    <input type="submit" value="Create food" />
+    <input style="background-color:red;color:white;" type="submit" value="Update food" />
   </div>
 </form>
+<button class="btn btn-danger" onclick="window.location.href='/Foods';">Back</button>
+
 
 </div>
 </body>
+
+		<!-- scrollToTop start here -->
+		<a href="#" class="scrollToTop"><i class="icofont-swoosh-up"></i></a>
+		<!-- scrollToTop ending here -->
+
+
+		
+		<script src="{{asset('libraries/assets/js/jquery.js')}}"></script>
+		<script src="{{asset('libraries/assets/js/waypoints.min.js')}}"></script>
+		<script src="{{asset('libraries/assets/js/bootstrap.min.js')}}"></script>
+		<script src="{{asset('libraries/assets/js/isotope.pkgd.min.js')}}"></script>
+		<script src="{{asset('libraries/assets/js/wow.min.js')}}"></script>
+		<script src="{{asset('libraries/assets/js/swiper.min.js')}}"></script>
+		<script src="{{asset('libraries/assets/js/lightcase.js')}}"></script>
+		<script src="{{asset('libraries/assets/js/jquery.counterup.min.js')}}"></script>
+		<script src="{{asset('libraries/assets/js/functions.js')}}"></script>
+	</body>
+</html>
 </html>

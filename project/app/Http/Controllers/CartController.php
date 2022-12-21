@@ -88,6 +88,7 @@ class CartController extends Controller
     {
         $data= cart::find($cart);
         $data->delete();
+        return redirect(route('signin.index'));
     }
     public function destroycartbyuserid()
     {
@@ -106,6 +107,7 @@ class CartController extends Controller
         $sessionId = session()->get('id');
         
         $temp=user::find($sessionId)->getcart()->first();
+        
        
         if($temp=='')
         {
@@ -172,6 +174,23 @@ class CartController extends Controller
     {   
         
         DB::table('cartfoods')->where('foods_id',$food)->where('carts_id',$cart)->delete();
+        $data=cartfood::where('carts_id',$cart);
+        $count=$data->count();
+        if($count==0){
+            $this->destroycartbyuserid();
+            return redirect(route('signin.index'));
+        }
         return redirect(url('toCart',['id'=>$cart])); 
+       
+    }
+    public static function checkifcartexist(){
+        // return session()->get('id');
+        if(session()->get('id')){
+        $data=user::find(session('id'))->getcart;
+        if($data!='')
+        return $data->id;
+    }
+    
+    
     }
 }

@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="csrf-token" content="{{csrf_token()}}">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+@extends('layouts.index')
+@include('layouts.nav1')
+
+    
+    <title>Add food</title>
     <style>* {
   box-sizing: border-box;
   margin: 0;
@@ -13,8 +10,8 @@
 }
 
 body {
-  background-color: #eee;
   font-family: 'helvetica neue', helvetica, arial, sans-serif;
+   background-image: url(/libraries/assets/css/bg-image/apps-bg.jpg);
   
 }
 
@@ -53,12 +50,12 @@ border-radius: 20px;
 
 </style>
 </head>
-<body  background="libraries/assets/css/bg-image/bg.jpg">
+@section('addfood')
+<body  background="/libraries/assets/css/bg-image/bg.jpg">
 <div class="container">
 <form method="post" action="{{route('Foods.store')}}" id="form" class="validate" enctype="multipart/form-data">
 @csrf 
 <div class="form-field">
-<input type="hidden"  name="id" value=1>
     <label for="username">name</label>
     <input type="text" name="name"  placeholder="food name"  />
   </div>
@@ -97,10 +94,28 @@ border-radius: 20px;
 
   <div class="form-field">
     <label for=""></label>
-    <input type="submit" value="Create food" />
-  </div>
-</form>
+    <input type="submit" style="background-color:#dc3545;" value="Create food" />
+</div>
 
 </div>
-</body>
+<button class="btn btn-danger" style="border-radius:50px;" onclick="window.location.href='/Foods';">Back</button>
+		<!-- scrollToTop start here -->
+		<a href="#" class="scrollToTop"><i class="icofont-swoosh-up"></i></a>
+		<!-- scrollToTop ending here -->
+
+
+		
+		<script src="{{asset('libraries/assets/js/jquery.js')}}"></script>
+		<script src="{{asset('libraries/assets/js/waypoints.min.js')}}"></script>
+		<script src="{{asset('libraries/assets/js/bootstrap.min.js')}}"></script>
+		<script src="{{asset('libraries/assets/js/isotope.pkgd.min.js')}}"></script>
+		<script src="{{asset('libraries/assets/js/wow.min.js')}}"></script>
+		<script src="{{asset('libraries/assets/js/swiper.min.js')}}"></script>
+		<script src="{{asset('libraries/assets/js/lightcase.js')}}"></script>
+		<script src="{{asset('libraries/assets/js/jquery.counterup.min.js')}}"></script>
+		<script src="{{asset('libraries/assets/js/functions.js')}}"></script>
+  
+	</body>
+
+  @endsection
 </html>

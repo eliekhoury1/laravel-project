@@ -19,9 +19,11 @@ return new class extends Migration
             $table->string("email");
             $table->string("number");
             $table->string("Admin_reply")->nullable();
-            $table->unsignedBigInteger("user_id");
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on("users");
+            $table->foreignId('user_id')
+            ->constrained()
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
         });
     }
 
